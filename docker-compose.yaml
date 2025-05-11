@@ -1,0 +1,16 @@
+services:
+  ai:
+    build: .
+    container_name: myAI
+    ports:
+      - "8000:8000"
+    environment:
+      - SERVER_HOST=host.docker.internal
+    
+  sound:
+    image: ghcr.io/teamfightingice/generative-sound-ai
+    container_name: generative-sound-ai
+    ports:
+      - "31414:31415"
+    environment:
+      - SERVER_HOST=host.docker.internal
