@@ -2,12 +2,13 @@ FROM python:3.12
 
 WORKDIR /app
 
-COPY . .
+# Copy the entire pyftg directory
+COPY pyftg /app/pyftg
 
-RUN cd pyftg/examples && pip install -r requirements.txt
+# Install requirements from examples folder
+RUN pip install -r pyftg/examples/requirements.txt
 
-RUN pip install typer
+# Set the working dir to examples folder
+WORKDIR /app/pyftg/examples
 
-CMD ["python", "Main_SinglePyAI.py", "--a2", "myAI"]  
-
-
+CMD ["python", "Main_SinglePyAI.py", "--host", "host.docker.internal", "--a2", "myAI"]
