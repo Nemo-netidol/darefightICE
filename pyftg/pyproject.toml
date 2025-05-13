@@ -1,0 +1,23 @@
+[project]
+name = "pyftg"
+version = "2.3"
+authors = [
+  { name="TeamFightingICE" },
+]
+description = "An interface for implementing python AI in DareFightingICE"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  'grpcio ~= 1.62.1',
+  'grpcio-tools ~= 1.62.1',
+  'protobuf ~= 4.25.3',
+]
+
+[project.urls]
+Homepage = "https://github.com/TeamFightingICE/pyftg"
+Issues = "https://github.com/TeamFightingICE/pyftg/issues"
