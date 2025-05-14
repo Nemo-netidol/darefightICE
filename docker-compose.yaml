@@ -13,3 +13,6 @@ services:
       - "31414:31415"
     environment:
       - SERVER_HOST=host.docker.internal
+      - PULSE_SERVER=host.docker.internal
+    volumes:
+      - ~/.config/pulse/cookie:/root/.config/pulse/cookie
