@@ -21,7 +21,7 @@ class myAI(AIInterface):
         return self.blind_flag
 
     def initialize(self, game_data: GameData, player_number: int):
-        logger.info("initialize myAI")
+        logger.info("initialize[ myAI ] by initialize")
         
 
         self.cc = CommandCenter()
@@ -35,13 +35,17 @@ class myAI(AIInterface):
 
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir, exist_ok=True)
-            logger.info("Created a new training data directory -----------------------------------")
+            logger.info("Created a new training data directory")
+        else:
+            logger.info("Detected output directory!")
 
-        if not os.path.exists(os.path.join(self.output_dir, "audio_data.csv")):
+        if not os.path.exists(self.output_path):
             with open(self.output_path, "w") as file:
                 writer = csv.writer(file)
                 writer.writerow(["frame"] + [f'mfcc_{i+1}' for i in range(13)] + ["action"])
-            logger.info("Created a new csv file -----------------------------------------------")
+            logger.info("Created a new csv file")
+        else:
+            logger.info("Detected csv file!")
 
     def input(self) -> Key:
         return self.key
