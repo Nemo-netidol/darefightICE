@@ -11,4 +11,4 @@ RUN pip install -r pyftg/examples/requirements.txt
 # Set the working dir to examples folder
 WORKDIR /app/pyftg/examples
 
-CMD ["python", "Main_SinglePyAI.py", "--host", "host.docker.internal", "--a2", "myAI"]
+CMD ["python", "Main_SinglePyAI.py", "--host", "host.docker.internal", "--a1", "KickAI", "--a2", "myAI"]

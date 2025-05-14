@@ -22,9 +22,26 @@ class myAI(AIInterface):
 
     def initialize(self, game_data: GameData, player_number: int):
         logger.info("initialize myAI")
+        
+
         self.cc = CommandCenter()
         self.key = Key()
         self.player = player_number
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        self.output_dir = os.path.join(BASE_DIR, "audio_dataset")
+        self.output_path = os.path.join(self.output_dir, "audio_data.csv")  
+
+        logger.info(f"Output path: {self.output_path}")
+
+        if not os.path.exists(self.output_dir):
+            os.makedirs(self.output_dir, exist_ok=True)
+            logger.info("Created a new training data directory -----------------------------------")
+
+        if not os.path.exists(os.path.join(self.output_dir, "audio_data.csv")):
+            with open(self.output_path, "w") as file:
+                writer = csv.writer(file)
+                writer.writerow(["frame"] + [f'mfcc_{i+1}' for i in range(13)] + ["action"])
+            logger.info("Created a new csv file -----------------------------------------------")
 
     def input(self) -> Key:
         return self.key
@@ -69,16 +86,6 @@ class myAI(AIInterface):
         logger.info(f"round end: {round_result}")
 
     def game_end(self):
-        csv_file = os.path.join(self.output_dir, "audio_data.csv")
-        with open(csv_file, "w") as file:
-            writer = csv.writer(file)
-
-            writer.writerow(["frame"] + [f"mfcc_{i}" for i in range(13)])
-
-            writer.writerows(self.audio_log)
-
-            print(f"Saved audio data to {csv_file}")
-
         logger.info("game end")
     
     def close(self):
