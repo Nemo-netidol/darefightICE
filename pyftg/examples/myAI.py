@@ -66,19 +66,29 @@ class myAI(AIInterface):
 
             self.cc.command_call("A")
         
+        if hasattr(self, 'audio_log'):
+            with open(self.output_path, "a", newline="") as file:
+                writer = csv.writer(file)
+                action = 'none'
+                writer.writerow([self.frame_county] + self.audio_log + [action])
+
+        
     def get_screen_data(self, screen_data: ScreenData):
         self.screen_data = screen_data
 
     def get_audio_data(self, audio_data: AudioData):
         self.audio_data = audio_data
         
-        data = np.frombuffer(audio_data.raw_data_bytes)
+        # data = np.frombuffer(audio_data.raw_data_bytes)
+        data = np.frombuffer(audio_data.raw_data_bytes, dtype=np.int16)[::2]
 
+        data = data.astype(np.float32) / 32768.0
         mfcc = librosa.feature.mfcc(y=data, n_mfcc=13)
-
         mfcc_vector = mfcc.mean(axis=1)
 
-        self.audio_log.append([self.frame_count] + mfcc_vector.tolist())
+        # self.audio_log.append([self.frame_count] + mfcc_vector.tolist())
+        # self.frame_count += 1
+        self.audio_log = mfcc_vector.tolist()
         self.frame_count += 1
 
         # print("audio data: ", self.audio_data)
